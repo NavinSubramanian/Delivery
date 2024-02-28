@@ -1,0 +1,129 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Exo:ital,wght@0,100..900;1,100..900&display=swap"
+      rel="stylesheet"
+    />
+    <style>
+      * {
+        padding: 0;
+        margin: 0;
+        font-family: 'Exo';
+        box-sizing: border-box;
+      }
+      a {
+        text-decoration: none;
+        color: #FF4651;
+      }
+      body {
+        width: 100vw;
+        overflow-x: hidden;
+        height: auto;
+      }
+      .cont {
+        display: flex;
+        height: 100%;
+        width: 100%;
+        align-items: center;
+        justify-content: space-evenly;
+      }
+      form{
+        display: flex;
+        flex-direction: column;
+        row-gap: 20px;
+        width: 50%;
+      }
+      form>input{
+        padding: 7px 0;
+        border: 1px solid rgba(0, 0, 0, 0.409);
+        border-radius: 5px;
+      }
+      form>button{
+        width: 50%;
+        margin: 0 auto;
+        padding: 8px 18px;
+        background-color: #FF4651;
+        border: none;
+        cursor: pointer;
+        color: white;
+        border-radius: 5px;
+        font-weight: 700;
+      }
+      .left{
+        height: 100%;
+        display: flex;
+        flex-direction: column;
+        justify-content: space-evenly;
+        align-items: center;
+        flex-basis: 50%;
+      }
+      .right{
+        flex-basis: 50%;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
+        height: 120vh;
+        width: 100%;
+        background-color:  #FF4651;
+        row-gap: 20px;
+      }
+      .right>*{
+        color: white;
+      }
+      .right>button{
+        background-color: white;
+        padding: 7px 20px;
+        border-radius: 15px;
+        font-weight: 700;
+        border: none;
+        cursor: pointer;
+      }
+    </style>
+  </head>
+  <body>
+    <div class="cont">
+      <div class="left">
+        {% if messages %}
+        {% for m in messages %}
+        <div class="alert alert-{{m.tags}}" role="alert" id="msg" style="background-color: rgb(32, 173, 32);padding:10px;width:80%;color:white;margin:0 auto;text-align:center">
+            {{m}}
+        </div>
+        {% endfor %}
+        {% endif %}
+        <h1 style="font-size: 50px;">Login</h1>
+        <img
+          src="{% static 'images/login.png' %}"
+          alt=""
+          style="height: 250px; width: 370px"
+        />
+        <form action="/log" method="post">
+            {% csrf_token %}
+            <label for="name">Name</label>
+            <input type="text" id="name" name="name" />
+            <label for="password">Password</label>
+            <input type="text" id="password" name="password" />
+            <button type="submit">Enter</button>
+        </form>
+      </div>
+      <div class="right">
+        <h1>New to the Page?</h1>
+        <button><a href="/inv">Signup</a></button>
+      </div>
+    </div>
+    <script>
+      var message_ele = document.getElementById("msg");
+  
+      setTimeout(function(){ 
+        message_ele.style.display = "none"; 
+      }, 3000);
+    </script>
+  </body>
+</html>

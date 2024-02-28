@@ -1,0 +1,165 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Exo:ital,wght@0,100..900;1,100..900&display=swap"
+      rel="stylesheet"
+    />
+    <style>
+        *{
+            padding: 0;
+            margin: 0;
+            box-sizing: border-box;
+            font-family: 'Exo';
+        }
+        a{
+            text-decoration: none;
+            color: #FF4651;
+        }
+        body{
+            overflow: hidden;
+            width: 100vw;
+            height: 100vh;
+        }
+        .cont{
+            display: flex;
+            height: 100%;
+            width: 100%;
+            align-items: flex-start;
+            column-gap: 20px;
+        }
+        .left{
+            flex-basis: 20%;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: space-between;
+            padding: 50px 0;
+            width: 100%;
+            height: 100%;
+            background-color: #FF4651;
+            border-radius: 0 10px 10px 0;
+        }
+        .left>*{
+            color: white;
+        }
+        .left>button{
+            background-color: white;
+            padding: 7px 18px;
+            border: none;
+            color: #FF4651;
+            font-weight: 600;
+            border-radius: 15px;
+        }
+        .right{
+            flex-basis: 80%;
+            height: 100%;
+            width: 100%;
+            display: flex;
+            flex-direction: column;
+            row-gap: 30px;
+        }
+        .maindetails{
+            width: 90%;
+            margin: 0 auto;
+            display: flex;
+            justify-content: space-around;
+            box-shadow: 0 0 5px 5px rgba(0, 0, 0, 0.147);
+            padding: 20px 10px ;
+        }
+
+        table {
+            font-family: arial, sans-serif;
+            border-collapse: collapse;
+            width: 90%;
+            margin: 0 auto;
+          }
+          
+          td, th {
+            border: 1px solid #dddddd;
+            text-align: left;
+            padding: 8px;
+          }
+          
+          tr:nth-child(even) {
+            background-color: #dddddd;
+          }
+          .firstdetail{
+            text-align: center;
+          }
+    </style>
+</head>
+<body>
+    <div class="cont">
+        <div class="left">
+            <h3>Inventory</h3>
+            <button><a href="logout">Logout</a></button>
+        </div>
+        <div class="right">
+            <div class="top">
+                <h2>Welcome {{current_user}}</h2>
+            </div>
+            <div class="mid">
+                <h1>Inventory Report</h1>
+                <div class="maindetails">
+                    <div class="firstdetail" >
+                        Category <br>
+                        <h1>{{categories}}</h1>
+                    </div>
+                    <div class="firstdetail">
+                        Stock <br>
+                        <h1>{{totalstock}}</h1>
+                    </div>
+                    <div class="firstdetail">
+                        Price <br>
+                        <h1>{{totalprice}}</h1>
+                    </div>
+                    <div class="firstdetail">
+                        Delivered <br>
+                        <h1>{{delivered}}</h1>
+                    </div>
+                    <div class="firstdetail">
+                        Add Item<br>
+                        <button style="background-color: #FF4651;padding:3px;border-radius:5px;border:none;color:white;margin-top:4px"><a href="additem" style="color: white;">add</a></button>
+                    </div>
+                </div>
+            </div>
+            <div class="bottom">
+
+                <table>
+                    <tr>
+                      <th>S.no</th>
+                      <th>Item Name</th>
+                      <th>Stock</th>
+                      <th>Price</th>
+                      <th>Category</th>
+                      <th>Perishable</th>
+                      <th>Expiry</th>
+                    </tr>
+                    {% for i in item %}
+                    <tr>
+                        <th>{{i.id}}</th>
+                        <th>{{i.itemname}}</th>
+                        {% for key, value in stock.items %}
+                        {% if key == i.itemname %}
+                        <th>{{value}}</th>
+                        {% endif %}
+                        {% endfor %}
+                        <th>{{i.cost}}</th>
+                        <th>{{i.category}}</th>
+                        <th>{{i.perish}}</th>
+                        <th>{{i.expiry}}</th>
+                      </tr>
+                      {% endfor %}
+                  </table>
+            </div>
+        </div>
+    </div>
+</body>
+</html>

@@ -1,0 +1,99 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <script src="https://cdn.jsdelivr.net/npm/flatpickr"></script>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/flatpickr/dist/flatpickr.min.css">
+    <link
+      href="https://fonts.googleapis.com/css2?family=Exo:ital,wght@0,100..900;1,100..900&display=swap"
+      rel="stylesheet"
+    />
+    <style>
+        *{
+            padding: 0;
+            margin: 0;
+            box-sizing: border-box;
+            font-family: 'Exo';
+        }
+        a{
+            text-decoration: none;
+            color: #FF4651;
+        }
+        body{
+            overflow-y: visible;
+            overflow-x: hidden;
+            width: 100vw;
+            height: 100vh;
+        }
+        .cont{
+            display: flex;
+            height: 100%;
+            padding-left: 50px;
+            width: 100%;
+            align-items: flex-start;
+            row-gap: 20px;
+            flex-direction: column;
+        }
+        form{
+            display: flex;
+            flex-direction: column;
+            row-gap: 10px;
+        }
+    </style>
+</head>
+<body>
+    <a href="/dashboard">Back?</a>
+    <hr>
+    <div class="cont">
+        Add Item
+        <form method="post">
+            {% csrf_token %}
+            <label for="name">Name:</label>
+            <input type="text" name="name" id="name">
+            <label for="cost">Cost:</label>
+            <input type="numbers" name="cost" id="cost">
+            <label for="">Category</label>
+            <select name="category" id="category">
+                {% for i in category %}
+                <option value="{{i.category}}">{{i.category}}</option>
+                {% endfor %}
+            </select>
+            <label for="stock">Stock:</label>
+            <input type="text" name="stock" id="stock">
+            <label for="perish">Perishable(yes/no):</label>
+            <input type="text" name="perish" id="peris">
+            <label for="datePicker2">Expiry date: </label>
+            <input type="text" id="datePicker2"  name='date2' placeholder="Select date" required><br>
+            <button type="submit">add</button>
+        </form>
+        <hr style="width: 100%;">
+        Increase Stock
+        <form action="/increasestock" method="post">
+            {% csrf_token %}
+            <label for="">Name:</label>
+            <select name="name" id="name">
+                {% for i in item %}
+                <option value="{{i.itemname}}">{{i.itemname}}</option>
+                {% endfor %}
+            </select>
+            <label for="inc">Quantity to Add:</label>
+            <input type="numbers" name="inc" id="inc">
+            <button type="submit">done</button>
+        </form>
+        <script>
+            const datePickerInput2 = document.getElementById('datePicker2');
+
+            const datePicker2 = flatpickr(datePickerInput2, {
+                mode: 'single',
+                dateFormat: 'd-m-Y',
+                minDate: '28-02-2024',
+            });
+        </script>
+    </div>
+</body>
+</html>
